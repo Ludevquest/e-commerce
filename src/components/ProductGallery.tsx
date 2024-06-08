@@ -14,12 +14,12 @@ const ProductGallery: React.FC = () => {
   return (
     <div>
       <div className="mb-4">
-        <Image src={selectedImage} alt="Selected product" className="w-full rounded-lg" />
+        <Image src={selectedImage} alt="Selected product" className="w-full rounded-lg" width={50} height={50} />
       </div>
       <div className="flex space-x-4">
         {images.map((image, index) => (
           <button key={index} onClick={() => setSelectedImage(image)} className="border-2 border-transparent focus:outline-none focus:border-primary rounded-lg">
-            <Image src={image} alt={`Product thumbnail ${index + 1}`} className="w-20 h-20 object-cover rounded-lg" />
+            <Image src={image} alt={`Product thumbnail ${index + 1}`} className="w-20 h-20 object-cover rounded-lg" width={50} height={50} />
           </button>
         ))}
       </div>

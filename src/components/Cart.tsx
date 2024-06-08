@@ -1,10 +1,9 @@
-
 import React from 'react';
-import { useCart } from '../context/CartContext';
+import { useCart, CartItem } from '../context/CartContext';
 import Image from 'next/image';
 
 const Cart: React.FC = () => {
-  const { cartItems, removeFromCart } = useCart();
+  const { items: cartItems, removeFromCart } = useCart();
 
   return (
     <div className="absolute top-16 right-4 bg-white shadow-md rounded-lg p-4 w-80">
@@ -13,17 +12,30 @@ const Cart: React.FC = () => {
         <p className="text-darkGrayishBlue">Your cart is empty.</p>
       ) : (
         <div>
-          {cartItems.map(item => (
+          {cartItems.map((item: CartItem) => (
             <div key={item.id} className="flex items-center mb-4">
-              <Image src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-lg"/>
-              <div className="ml-4 flex-1">
-                <h3 className="text-veryDarkBlue">{item.name}</h3>
-                <p className="text-darkGrayishBlue">{item.quantity} x ${item.price}.00 <span className="font-bold text-veryDarkBlue">${item.quantity * item.price}.00</span></p>
+              <div className="w-16 h-16 relative mr-4">
+                <Image
+                  src={`/images/products/${item.id}.png`}
+                  alt={item.name}
+                  layout="fill"
+                  objectFit="cover"
+                  fetchPriority="high" // Use a propriedade correta aqui
+                />
               </div>
-              <button onClick={() => removeFromCart(item.id)} className="text-red-600">Remove</button>
+              <div>
+                <p className="text-sm font-bold">{item.name}</p>
+                <p className="text-sm text-darkGrayishBlue">${item.price}</p>
+                <p className="text-sm text-darkGrayishBlue">Quantity: {item.quantity}</p>
+              </div>
+              <button
+                className="ml-auto bg-red-500 text-white p-1 rounded"
+                onClick={() => removeFromCart(item.id)}
+              >
+                Remove
+              </button>
             </div>
           ))}
-          <button className="bg-primary text-white py-2 px-4 rounded-lg w-full">Checkout</button>
         </div>
       )}
     </div>
