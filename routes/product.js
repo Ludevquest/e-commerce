@@ -1,6 +1,16 @@
 const express = require('express');
-const Product = require('../../models/Product');
+const Product = require('../models/Product');
 const router = express.Router();
+
+// Rota para listar todos os produtos
+router.get('/', async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro interno do servidor' });
+  }
+});
 
 // Obter um produto pelo ID
 router.get('/:id', async (req, res) => {
@@ -15,5 +25,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+// Adicione mais rotas conforme necessário
 
+module.exports = router;

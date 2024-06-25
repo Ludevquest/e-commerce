@@ -1,19 +1,19 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const authMiddleware = (req, res, next) => {
   try {
-    // Verificar se há um token JWT no cabeçalho Authorization
     const token = req.headers.authorization.split(' ')[1];
     if (!token) {
-      return res.status(401).json({ message: 'Token não fornecido' });
+      return res.status(401).json({ message: 'Token not provided' });
     }
 
-    // Verificar se o token é válido
-    const decodedToken = jwt.verify(token, 'secret');
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     req.userData = { userId: decodedToken.userId };
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'Token inválido' });
+    console.error('Error verifying token:', error.message);
+    return res.status(401).json({ message: 'Invalid token' });
   }
 };
 
