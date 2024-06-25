@@ -1,7 +1,202 @@
+@import url('modal.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
   @apply font-sans text-base bg-lightGrayishBlue;
+}
+
+header {
+  @layer utilities {
+    .underline-hover {
+      position: relative;
+    }
+    .underline-hover::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: transparent;
+      transition: background-color 0.3s;
+      transform: translateY(20px);
+    }
+    .underline-hover:hover::after {
+      background-color: hsl(26, 100%, 55%);
+    }
+  }
+}
+
+/* Additional styles for product gallery */
+.product-gallery {
+  @apply w-full lg:w-1/2;
+}
+
+.main-image {
+  @apply w-full;
+}
+
+/* Additional styles for product page */
+.product-container {
+  @apply flex flex-col items-center p-4;
+}
+
+.product-image {
+  @apply relative w-full;
+}
+
+.product-image img {
+  @apply w-full;
+}
+
+.product-title {
+  @apply text-5xl font-bold;
+}
+
+.product-description {
+  @apply text-sm text-darkGrayishBlue mt-2;
+}
+
+.product-pricing {
+  @apply flex items-center justify-center mt-4;
+}
+
+.current-price {
+  @apply text-2xl font-bold text-primary;
+}
+
+.discount-badge {
+  @apply bg-primary text-white font-bold rounded-lg px-2 py-1 ml-2;
+}
+
+.product-quantity {
+  @apply flex items-center justify-center mt-4;
+}
+
+.quantity-control {
+  @apply flex items-center border border-gray-300 rounded-lg;
+}
+
+.quantity-control button {
+  @apply bg-transparent border-none text-primary font-bold text-2xl p-2 cursor-pointer;
+}
+
+.quantity-control input {
+  @apply text-center w-10 border-none;
+}
+
+.add-to-cart {
+  @apply w-full bg-primary text-white font-bold rounded-lg py-3 mt-4;
+}
+
+@media (min-width: 1024px) {
+  .index-container {
+    @apply gap-6;
+  }
+
+  .product-info {
+    @apply w-full mx-0 mt-10;
+  }
+}
+
+@media (max-width: 768px) {
+  .index-container {
+    @apply gap-6;
+  }
+
+  .product-gallery {
+    @apply ml-0 mr-0;
+  }
+
+  .product-container {
+    @apply flex-row;
+  }
+
+  .product-image {
+    @apply w-full;
+  }
+
+  .product-info {
+    @apply w-full text-left mx-8 pb-8 mt-14;
+  }
+
+  .product-title {
+    @apply text-4xl;
+  }
+
+  .product-description {
+    @apply text-base;
+  }
+
+  .current-price {
+    @apply grid grid-cols-3;
+  }
+
+  .original-price {
+    @apply flex items-center w-full;
+  }
+
+  .line-through-price {
+    @apply right-0 absolute pr-4 pt-2;
+  }
+
+  .quantity-control {
+    @apply flex-row items-center;
+  }
+
+  .add-to-cart {
+    @apply w-full;
+  }
+}
+
+@media (max-width: 375px) {
+  .index-container {
+    @apply gap-6;
+  }
+
+  .product-container {
+    @apply flex-col;
+  }
+
+  .product-gallery {
+    @apply w-full;
+  }
+
+  .main-image {
+    @apply w-full;
+  }
+
+  .product-info {
+    @apply pt-8 mx-8;
+  }
+
+  .product-title {
+    @apply text-3xl;
+  }
+
+  .product-description {
+    @apply text-base text-justify;
+  }
+
+  .current-price {
+    @apply grid grid-cols-3;
+  }
+
+  .line-through-price {
+    @apply right-0 absolute pr-4 pt-2;
+  }
+
+  .quantity-cart {
+    @apply flex-col items-stretch w-full gap-2;
+  }
+
+  .quantity-control {
+    @apply flex-row items-center justify-between;
+  }
+
+  .add-to-cart {
+    @apply w-full;
+  }
 }
