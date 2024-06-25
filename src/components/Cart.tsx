@@ -1,41 +1,54 @@
 import React from 'react';
-import { useCart, CartItem } from '../context/CartContext';
+import { useCart } from '../context/CartContext';
 import Image from 'next/image';
+import styles from '../styles/Cart.module.css';
 
 const Cart: React.FC = () => {
-  const { items: cartItems, removeFromCart } = useCart();
+  const { items: cartItems, removeFromCart, checkout } = useCart();
 
   return (
-    <div className="absolute top-16 right-4 bg-white shadow-md rounded-lg p-4 w-80">
-      <h2 className="text-lg font-bold mb-4">Cart</h2>
+    <div className={styles['cart-container']}>
+      <h2 className={styles['cart-header']}>Cart</h2>
       {cartItems.length === 0 ? (
-        <p className="text-darkGrayishBlue">Your cart is empty.</p>
+        <p className={styles['cart-empty']}>Your cart is empty.</p>
       ) : (
         <div>
-          {cartItems.map((item: CartItem) => (
-            <div key={item.id} className="flex items-center mb-4">
-              <div className="w-16 h-16 relative mr-4">
+          {cartItems.map((item) => (
+            <div key={item.id} className={styles['cart-item']}>
+              <div className={styles['cart-item-img']}>
                 <Image
-                  src={`/images/products/${item.id}.png`}
+                  src={item.image}
                   alt={item.name}
-                  layout="fill"
-                  objectFit="cover"
-                  fetchPriority="high" // Use a propriedade correta aqui
+                  width={50}
+                  height={50}
+                  priority
                 />
               </div>
-              <div>
-                <p className="text-sm font-bold">{item.name}</p>
-                <p className="text-sm text-darkGrayishBlue">${item.price}</p>
-                <p className="text-sm text-darkGrayishBlue">Quantity: {item.quantity}</p>
+              <div className={styles['cart-item-info']}>
+                <p className={styles['cart-item-name']}>{item.name}</p>
+                <div className={styles['cart-item-price-container']}>
+                  <p className={styles['cart-item-price']}>${item.price}.00 x {item.quantity}</p>
+                  <p className={styles['cart-item-total-price']}>${item.price * item.quantity}.00</p>
+                </div>
               </div>
               <button
-                className="ml-auto bg-red-500 text-white p-1 rounded"
+                className={styles['cart-remove-btn']}
                 onClick={() => removeFromCart(item.id)}
               >
-                Remove
+                <Image
+                  src={'/images/icon-delete.svg'}
+                  alt={'Delete'}
+                  width={20}  // Ajuste para um tamanho menor
+                  height={10} // Ajuste para um tamanho menor
+                />
               </button>
             </div>
           ))}
+          <div className={styles['cart-footer']}>
+            <button className={styles['cart-checkout-btn']} onClick={checkout}>
+              Checkout
+            </button>
+          </div>
         </div>
       )}
     </div>
